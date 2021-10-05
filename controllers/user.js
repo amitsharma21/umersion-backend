@@ -51,10 +51,11 @@ export const signup = async (req, res) => {
 
   try {
     //checking whether user already present or not
-    const existingUser = await User.find({ email, phoneNumber });
+    const existingUserWithEmail = await User.findOne({ email });
+    const existingUserWithPhoneNumber = await User.findOne({ phoneNumber });
 
     //if user is present we are not moving forward and send the error to the frontend
-    if (existingUser)
+    if (existingUserWithEmail || existingUserWithPhoneNumber)
       return res.status(400).json({
         message: "User already exists with given email or phone number",
       });
