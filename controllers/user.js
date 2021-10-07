@@ -4,6 +4,7 @@ import twilio from "twilio";
 import dotenv from "dotenv";
 
 import User from "../models/user.js";
+import router from "../routes/user.js";
 
 dotenv.config();
 
@@ -182,4 +183,56 @@ export const verifyOtp = async (req, res) => {
       console.log(error);
       res.status(404).json({ message: "unsuccessfull" });
     });
+};
+
+//----------------------------change Name---------------------------------
+export const changeName = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const { name } = req.body;
+    const result = await User.findOneAndUpdate(
+      { _id: id },
+      { name: name },
+      { new: true }
+    );
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "something went wrong" });
+  }
+};
+
+//-------------------------change email--------------------------
+export const changeEmail = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const { email } = req.body;
+    const result = await User.findOneAndUpdate(
+      { _id: id },
+      { email: email },
+      { new: true }
+    );
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "something went wrong" });
+  }
+};
+
+//-----------------------change password -------------------------
+export const changePassword = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const { password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 12 /*salt number*/);
+    const result = await User.findOneAndUpdate(
+      { _id: id },
+      { password: hashedPassword },
+      { new: true }
+    );
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "something went wrong" });
+  }
 };

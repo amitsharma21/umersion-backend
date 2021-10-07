@@ -8,6 +8,9 @@ import {
   fetchSingle,
   generateOtp,
   verifyOtp,
+  changeName,
+  changeEmail,
+  changePassword,
 } from "../controllers/user.js";
 import signupMiddleware from "../middleware/signup.js";
 
@@ -22,8 +25,15 @@ router.post("/googlesignin", googleSignIn);
 router.get("/fetchall", fetchAll);
 router.get("/fetchsingle/:id", fetchSingle);
 
-//forget password
+//signup otp verification
 router.post("/generatesignupotp", signupMiddleware, generateOtp);
+//normal otp generation
+router.post("/generateotp", generateOtp);
 router.post("/verifyotp", verifyOtp);
+
+//updating profile
+router.patch("/changename/:id", changeName);
+router.patch("/changeemail/:id", changeEmail);
+router.patch("/changepassword/:id", changePassword);
 
 export default router;
