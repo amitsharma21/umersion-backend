@@ -161,11 +161,9 @@ export const generateOtp = async (req, res) => {
     .services(process.env.TWILIO_SERVICE_ID)
     .verifications.create({ to: phoneNumber, channel: channel })
     .then((verification) => {
-      console.log(verification.status);
       res.status(200).json(verification);
     })
     .catch((error) => {
-      console.log(error);
       res.status(404).json({ message: "unsuccessfull" });
     });
 };

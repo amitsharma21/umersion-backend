@@ -9,6 +9,7 @@ import {
   generateOtp,
   verifyOtp,
 } from "../controllers/user.js";
+import signupMiddleware from "../middleware/signup.js";
 
 const router = express.Router();
 
@@ -22,7 +23,7 @@ router.get("/fetchall", fetchAll);
 router.get("/fetchsingle/:id", fetchSingle);
 
 //forget password
-router.post("/generateotp", generateOtp);
+router.post("/generatesignupotp", signupMiddleware, generateOtp);
 router.post("/verifyotp", verifyOtp);
 
 export default router;

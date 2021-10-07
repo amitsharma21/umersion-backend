@@ -8,6 +8,7 @@ import {
   fetchSingleRemainder,
   fetchAllRemainder,
   deleteRemainder,
+  updateRemainder,
 } from "../controllers/remainder.js";
 
 const router = express.Router();
@@ -16,5 +17,6 @@ router.post("/create", userAuth, createRemainder);
 router.get("/fetchsingle/:id", userAuth, fetchSingleRemainder);
 router.get("/fetchall", userAuth, fetchAllRemainder);
 router.delete("/delete/:id", userAuth, deleteRemainder);
+router.patch("/update/:id", userAuth, updateRemainder);
 
 export default router;

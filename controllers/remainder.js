@@ -50,3 +50,19 @@ export const deleteRemainder = async (req, res) => {
     res.status(500).json({ message: "something went wrong!" });
   }
 };
+
+//update the remainder it takes the id of faq as argument
+export const updateRemainder = async (req, res) => {
+  try {
+    if (!req.userId)
+      return res.status(404).json({ message: "user is not authenticated" });
+    const { id } = req.params;
+    const remainder = req.body;
+    const updatedRemainder = await Remainder.findByIdAndUpdate(id, remainder, {
+      new: true,
+    });
+    res.status(200).json(updatedRemainder);
+  } catch (error) {
+    res.status(500).json({ message: "something went wrong" });
+  }
+};
