@@ -1,9 +1,11 @@
 import mongoose from "mongoose";
 
 const feeling = mongoose.Schema({
-  title: { type: String, required: true },
-  description: String,
-  tags: [String],
+  author: { type: String, required: true },
+  date: { type: Date, required: true },
+  mood: { type: String, required: true },
+  tags: { type: [String] },
+  feeling: { type: String },
 });
 
 const PostMessage = mongoose.model("Feeling", feeling);

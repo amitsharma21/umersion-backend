@@ -12,6 +12,7 @@ import termsAndConditionsRoutes from "./routes/termsandcondition.js";
 import privacyPolicyRoutes from "./routes/privacypolicy.js";
 import remainderRoutes from "./routes/remainder.js";
 import noteRoutes from "./routes/note.js";
+import feelingRoutes from "./routes/feeling.js";
 
 const app = express();
 dotenv.config();
@@ -36,6 +37,8 @@ app.use("/privacypolicy", privacyPolicyRoutes);
 app.use("/remainder", remainderRoutes);
 //notes route
 app.use("/note", noteRoutes);
+//feeling route
+app.use("/feeling", feelingRoutes);
 app.get("/", (req, res) => {
   res.send("Welcome to the Umersion API version 1.0");
 });

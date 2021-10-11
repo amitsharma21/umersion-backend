@@ -42,7 +42,7 @@ export const signin = async (req, res) => {
     const token = jwt.sign(
       { email: existingUser.email, id: existingUser._id },
       process.env.JWT_SECRET_KEY,
-      { expiresIn: "1h" }
+      { expiresIn: "45d" }
     );
     res.status(200).json({ result: existingUser, token });
   } catch (error) {
@@ -68,7 +68,7 @@ export const googleSignIn = async (req, res) => {
         const token = jwt.sign(
           { email: existingUser.email, id: existingUser._id },
           process.env.JWT_SECRET_KEY,
-          { expiresIn: "1h" }
+          { expiresIn: "45d" }
         );
         return res.status(200).json({ result: existingUser, token });
       }
@@ -83,7 +83,7 @@ export const googleSignIn = async (req, res) => {
     const token = jwt.sign(
       { email: result.email, id: result._id },
       process.env.JWT_SECRET_KEY,
-      { expiresIn: "1h" }
+      { expiresIn: "45d" }
     );
     res.status(200).json({ result, token });
   } catch (error) {
@@ -124,7 +124,7 @@ export const signup = async (req, res) => {
       { email: result.email, id: result._id },
       /* at 2nd argument position we need to enter the secret string */
       process.env.JWT_SECRET_KEY,
-      { expiresIn: "1h" }
+      { expiresIn: "45d" }
     );
 
     //sending back the details of the created user
