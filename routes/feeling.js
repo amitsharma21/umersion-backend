@@ -4,7 +4,7 @@ import {
   createFeeling,
   fetchAllFeelings,
   fetchSingleFeelingById,
-  fetchFeelingByDate,
+  // fetchFeelingByDate,
   updateFeeling,
   deleteFeeling,
 } from "../controllers/feeling.js";
@@ -15,7 +15,7 @@ const router = express.Router();
 router.post("/create", userAuth, createFeeling);
 router.get("/fetchall", userAuth, fetchAllFeelings);
 router.get("/fetchsingle/:id", userAuth, fetchSingleFeelingById);
-router.get("/fetchall/:date", userAuth, fetchFeelingByDate);
+// router.get("/fetchall/:date", userAuth, fetchFeelingByDate);
 router.patch("/update/:id", userAuth, updateFeeling);
 router.delete("/delete/:id", userAuth, deleteFeeling);
 
