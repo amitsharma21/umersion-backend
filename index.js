@@ -18,7 +18,7 @@ import blogRoutes from "./routes/blog.js";
 import musicRoutes from "./routes/music.js";
 
 const app = express();
-app.use(express.static("./public"));
+app.use(express.static("public"));
 dotenv.config();
 
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
