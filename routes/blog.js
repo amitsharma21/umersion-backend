@@ -1,7 +1,5 @@
 import express from "express";
 import fileUpload from "express-fileupload";
-import { fileURLToPath } from "url";
-import path from "path";
 
 import {
   createBlog,

@@ -16,6 +16,7 @@ import noteRoutes from "./routes/note.js";
 import feelingRoutes from "./routes/feeling.js";
 import blogRoutes from "./routes/blog.js";
 import musicRoutes from "./routes/music.js";
+import motivationRoutes from "./routes/motivation.js";
 
 const app = express();
 app.use(express.static("public"));
@@ -47,6 +48,8 @@ app.use("/feeling", feelingRoutes);
 app.use("/blog", blogRoutes);
 //music route
 app.use("/music", musicRoutes);
+//motivation route
+app.use("/motivation", motivationRoutes);
 app.get("/", (req, res) => {
   res.send("Welcome to the Umersion API version 1.0");
 });

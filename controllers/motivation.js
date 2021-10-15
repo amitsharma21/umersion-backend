@@ -3,20 +3,19 @@ import fs from "fs";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 
-import Blog from "../models/blog.js";
+import Motivation from "../models/motivation.js";
 
 dotenv.config();
 
-//----------------------------create blog--------------------------------------------
-export const createBlog = async (req, res) => {
+//----------------------------create motivation--------------------------------------------
+export const createMotivation = async (req, res) => {
   try {
-    const file = req.files.blogImage;
-    const { title, description, tags, date, author } = req.body;
+    const file = req.files.motivationImage;
+    const { quote } = req.body;
 
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
-    const fileName =
-      new Date().getTime().toString() + author + path.extname(file.name);
+    const fileName = new Date().getTime().toString() + path.extname(file.name);
 
     //checking file size
     if (file.truncated) throw new Error("File size is too big");
@@ -29,16 +28,16 @@ export const createBlog = async (req, res) => {
     )
       throw new Error("File type not supported");
     // saving file to the folder
-    const savePath = path.join(__dirname, "../public/images/blogs", fileName);
+    const savePath = path.join(
+      __dirname,
+      "../public/images/motivations",
+      fileName
+    );
     await file.mv(savePath);
 
     //saving data to the database
-    const result = await Blog.create({
-      title,
-      description,
-      tags,
-      date,
-      author,
+    const result = await Motivation.create({
+      quote,
       image: fileName,
     });
 
@@ -48,16 +47,16 @@ export const createBlog = async (req, res) => {
   }
 };
 
-//fetch single blog
-export const fetchSingleBlog = async (req, res) => {
+//fetch single motivation
+export const fetchSingleMotivation = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await Blog.findById(id);
+    const result = await Motivation.findById(id);
 
     const fileName = result.image;
     result.image = path.join(
       process.env.BASIC_ROUTE,
-      "../images/blogs",
+      "../images/motivations",
       fileName
     );
     res.status(200).json(result);
@@ -66,15 +65,15 @@ export const fetchSingleBlog = async (req, res) => {
   }
 };
 
-//fetch all blog
-export const fetchAllBlogs = async (req, res) => {
+//fetch all motivations
+export const fetchAllMotivations = async (req, res) => {
   try {
-    const result = await Blog.find();
+    const result = await Motivation.find();
     result.map((single) => {
       const fileName = single.image;
       single.image = path.join(
         process.env.BASIC_ROUTE,
-        "../images/blogs",
+        "../images/motivations",
         fileName
       );
       return single;
@@ -85,17 +84,16 @@ export const fetchAllBlogs = async (req, res) => {
   }
 };
 
-//---------------update the blog take the id of blog as parameter----------
-export const updateBlog = async (req, res) => {
+//---------------update the motivation take the id of motivation as parameter----------
+export const updateMotivation = async (req, res) => {
   try {
     const { id } = req.params;
-    const file = req.files.blogImage;
-    const { title, description, tags, date, author, image } = req.body;
+    const file = req.files.motivationImage;
+    const { quote } = req.body;
 
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
-    const fileName =
-      new Date().getTime().toString() + author + path.extname(file.name);
+    const fileName = new Date().getTime().toString() + path.extname(file.name);
 
     //checking file size
     if (file.truncated) throw new Error("File size is too big");
@@ -108,43 +106,47 @@ export const updateBlog = async (req, res) => {
     )
       throw new Error("File type not supported");
     // saving file to the folder
-    const savePath = path.join(__dirname, "../public/images/blogs", fileName);
+    const savePath = path.join(
+      __dirname,
+      "../public/images/motivations",
+      fileName
+    );
     await file.mv(savePath);
     //updating data in db
-    const updatedBlog = await Blog.findByIdAndUpdate(id, {
-      title,
-      description,
-      tags: ["c", "d"],
-      date: new Date(),
-      author,
+    const updatedMotivation = await Motivation.findByIdAndUpdate(id, {
+      quote,
       image: fileName,
     });
     const deletePath = path.join(
       __dirname,
-      "../public/images/blogs",
-      updatedBlog.image
+      "../public/images/motivations",
+      updatedMotivation.image
     );
     fs.unlinkSync(deletePath);
 
-    res.status(200).json(updatedBlog);
+    res.status(200).json(updatedMotivation);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });
   }
 };
 
-//-----------------------------------------------delete the blog----------------
-export const deleteBlog = async (req, res) => {
+//-----------------------------------------------delete the motivation----------------
+export const deleteMotivation = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const result = await Blog.findByIdAndDelete(id);
+    const result = await Motivation.findByIdAndDelete(id);
 
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
 
     const fileName = result.image;
-    const pathToFile = path.join(__dirname, "../public/images/blogs", fileName);
+    const pathToFile = path.join(
+      __dirname,
+      "../public/images/motivations",
+      fileName
+    );
 
     fs.unlinkSync(pathToFile);
 
