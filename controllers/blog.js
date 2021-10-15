@@ -1,8 +1,11 @@
 import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
+import dotenv from "dotenv";
 
 import Blog from "../models/blog.js";
+
+dotenv.config();
 
 //----------------------------create blog--------------------------------------------
 export const createBlog = async (req, res) => {
@@ -51,11 +54,13 @@ export const fetchSingleBlog = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await Blog.findById(id);
-    console.log(result);
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = path.dirname(__filename);
+
     const fileName = result.image;
-    result.image = path.join("../images/blogs", fileName);
+    result.image = path.join(
+      process.env.BASIC_ROUTE,
+      "../images/blogs",
+      fileName
+    );
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ message: "something went wrong" });
@@ -63,7 +68,24 @@ export const fetchSingleBlog = async (req, res) => {
 };
 
 //fetch all blog
-export const fetchAllBlogs = async (req, res) => {};
+export const fetchAllBlogs = async (req, res) => {
+  try {
+    const result = await Blog.find();
+    console.log(result);
+    result.map((single) => {
+      const fileName = single.image;
+      single.image = path.join(
+        process.env.BASIC_ROUTE,
+        "../images/blogs/",
+        fileName
+      );
+      return single;
+    });
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ message: "something went wrong" });
+  }
+};
 
 //---------------update the blog take the id of blog as parameter----------
 export const updateBlog = async (req, res) => {
