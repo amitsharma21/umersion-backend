@@ -20,3 +20,19 @@ export const fetchPrivacyPolicy = async (req, res) => {
     res.status(500).json({ message: "something went wrong!" });
   }
 };
+
+//update the privacy policy
+export const updatePrivacyPolicy = async (req, res) => {
+  try {
+    const { ckEditorData } = req.body;
+    const result = await PrivacyPolicy.find({});
+    const updatedPrivacyPolicy = await PrivacyPolicy.findByIdAndUpdate(
+      result[0]._id,
+      { privacyPolicy: ckEditorData },
+      { new: true }
+    );
+    res.status(200).json(updatedPrivacyPolicy);
+  } catch (error) {
+    res.status(500).json({ message: "something went wrong!" });
+  }
+};

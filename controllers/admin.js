@@ -1,8 +1,14 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import sgmail from "@sendgrid/mail";
+import dotenv from "dotenv";
 
 import Admin from "../models/admin.js";
+import User from "../models/user.js";
 
+dotenv.config();
+
+sgmail.setApiKey(process.env.SENDGRID_API_KEY);
 //sigining in admin
 export const signin = async (req, res) => {
   const { email, password } = req.body;
@@ -58,6 +64,47 @@ export const signup = async (req, res) => {
 
     //sending back the details of the created user
     res.status(200).json({ result, token });
+  } catch (error) {
+    res.status(500).json({ message: "something went wrong" });
+  }
+};
+
+//deactivate or reactivate  the given user
+export const toggleUserStatus = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    const result = await User.find({ email: email });
+    const status = result[0].isActive;
+    const id = result[0]._id;
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { isActive: !status },
+      { new: true }
+    );
+    next();
+  } catch (error) {
+    res.status(500).json({ message: "something went wrong" });
+  }
+};
+
+//send email
+export const sendEmail = async (req, res) => {
+  try {
+    const { email, emailSubject, emailDescription } = req.body;
+    const message = {
+      to: email,
+      from: "amitsharma@ideausher.com",
+      subject: emailSubject,
+      text: emailDescription,
+    };
+    sgmail
+      .send(message)
+      .then((response) => {
+        res.status(200).json({ message: "Action Performed successfully" });
+      })
+      .catch((error) => {
+        res.status(500).json({ message: "something went wrong" });
+      });
   } catch (error) {
     res.status(500).json({ message: "something went wrong" });
   }

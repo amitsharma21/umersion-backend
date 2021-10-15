@@ -6,7 +6,7 @@ const userSchema = mongoose.Schema({
   password: { type: String, required: false },
   phoneNumber: { type: Number, required: false },
   profilePicture: { type: String, required: false },
-  isActive: { type: Boolean, default: false },
+  isActive: { type: Boolean, default: true },
   signUpMethod: { type: String, required: true },
 });
 

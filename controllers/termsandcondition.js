@@ -20,3 +20,21 @@ export const fetchTermsAndConditions = async (req, res) => {
     res.status(500).json({ message: "something went wrong!" });
   }
 };
+
+//update the terms and conditions
+
+export const updateTermsAndConditions = async (req, res) => {
+  try {
+    const { ckEditorData } = req.body;
+    const result = await TermsAndCondition.find({});
+    console.log(result[0]._id);
+    const updatedTac = await TermsAndCondition.findByIdAndUpdate(
+      result[0]._id,
+      { tac: ckEditorData },
+      { new: true }
+    );
+    res.status(200).json(updatedTac);
+  } catch (error) {
+    res.status(500).json({ message: "something went wrong!" });
+  }
+};
