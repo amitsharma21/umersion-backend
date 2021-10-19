@@ -36,8 +36,8 @@ export const createBlog = async (req, res) => {
     const result = await Blog.create({
       title,
       description,
-      tags,
-      date,
+      tags: ["a"],
+      date: new Date(),
       author,
       image: fileName,
     });
