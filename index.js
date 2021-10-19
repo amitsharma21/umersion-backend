@@ -3,7 +3,6 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-import fileUpload from "express-fileupload";
 
 import userRoutes from "./routes/user.js";
 import adminRoutes from "./routes/admin.js";
@@ -16,6 +15,7 @@ import noteRoutes from "./routes/note.js";
 import feelingRoutes from "./routes/feeling.js";
 import blogRoutes from "./routes/blog.js";
 import musicRoutes from "./routes/music.js";
+import videoRoutes from "./routes/video.js";
 import motivationRoutes from "./routes/motivation.js";
 
 const app = express();
@@ -48,6 +48,8 @@ app.use("/feeling", feelingRoutes);
 app.use("/blog", blogRoutes);
 //music route
 app.use("/music", musicRoutes);
+//video route
+app.use("/video", videoRoutes);
 //motivation route
 app.use("/motivation", motivationRoutes);
 app.get("/", (req, res) => {
