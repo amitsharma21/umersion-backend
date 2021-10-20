@@ -5,6 +5,7 @@ const musicSchema = mongoose.Schema({
   description: { type: String, required: true },
   tags: { type: [String], required: true },
   music: { type: String, required: true },
+  thumbnail: { type: String, required: false },
   plan: { type: String, requires: true, default: "free" },
 });
 
