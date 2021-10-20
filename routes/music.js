@@ -1,7 +1,7 @@
 import express from "express";
 import fileUpload from "express-fileupload";
 
-import { createMusic } from "../controllers/music.js";
+import { createMusic, streamMusic } from "../controllers/music.js";
 
 const router = express.Router();
 
@@ -13,5 +13,6 @@ router.use(
 );
 
 router.post("/create", createMusic);
+router.get("/stream/:id", streamMusic);
 
 export default router;

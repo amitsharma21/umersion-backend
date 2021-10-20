@@ -38,7 +38,7 @@ export const createVideo = async (req, res) => {
   }
 };
 
-//fetching the single video
+//fetching single video and stream that
 export const streamVideo = async (req, res) => {
   try {
     const { id } = req.params;
@@ -46,8 +46,6 @@ export const streamVideo = async (req, res) => {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
     const range = req.headers.range;
-    console.log(result);
-    console.log("amma");
     const videoPath = path.join(__dirname, "../public/video", result.video);
     const videoSize = fs.statSync(videoPath).size;
 
@@ -68,7 +66,6 @@ export const streamVideo = async (req, res) => {
     const stream = fs.createReadStream(videoPath, { start, end });
     stream.pipe(res);
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: "something went wrong" });
   }
 };

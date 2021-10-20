@@ -55,11 +55,7 @@ export const fetchSingleBlog = async (req, res) => {
     const result = await Blog.findById(id);
 
     const fileName = result.image;
-    result.image = path.join(
-      process.env.BASIC_ROUTE,
-      "../images/blogs",
-      fileName
-    );
+    result.image = path.join(process.env.BASIC_ROUTE, "images/blogs", fileName);
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ message: "something went wrong" });
@@ -74,7 +70,7 @@ export const fetchAllBlogs = async (req, res) => {
       const fileName = single.image;
       single.image = path.join(
         process.env.BASIC_ROUTE,
-        "../images/blogs",
+        "images/blogs",
         fileName
       );
       return single;

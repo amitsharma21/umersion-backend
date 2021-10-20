@@ -8,7 +8,7 @@ const router = express.Router();
 router.use(
   fileUpload({
     createParentPath: true,
-    limits: { fileSize: 100 * 1024 * 1024 },
+    limits: { fileSize: 300 * 1024 * 1024 },
   })
 );
 
