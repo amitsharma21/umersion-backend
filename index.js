@@ -17,6 +17,7 @@ import blogRoutes from "./routes/blog.js";
 import musicRoutes from "./routes/music.js";
 import videoRoutes from "./routes/video.js";
 import motivationRoutes from "./routes/motivation.js";
+import sessionRoutes from "./routes/session.js";
 
 const app = express();
 app.use(express.static("public"));
@@ -52,6 +53,8 @@ app.use("/music", musicRoutes);
 app.use("/video", videoRoutes);
 //motivation route
 app.use("/motivation", motivationRoutes);
+//session route
+app.use("/session", sessionRoutes);
 app.get("/", (req, res) => {
   res.send("Welcome to the Umersion API version 1.0");
 });

@@ -62,7 +62,7 @@ export const fetchSingleBlog = async (req, res) => {
   }
 };
 
-//fetch all blog
+//---------------------------------fetch all blog--------------------------------------------
 export const fetchAllBlogs = async (req, res) => {
   try {
     const result = await Blog.find();

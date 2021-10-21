@@ -1,8 +1,10 @@
-import Music from "../models/music.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import fs from "fs";
 import dotenv from "dotenv";
+
+import Music from "../models/music.js";
+import User from "../models/user.js";
 
 dotenv.config();
 
@@ -125,6 +127,67 @@ export const fetchSingleMusic = async (req, res) => {
     );
     res.status(200).json(result);
   } catch (error) {
+    res.status(500).json({ message: "something went wrong" });
+  }
+};
+
+//----------------------------add to favourite----------------------------------
+export const addToFavourite = async (req, res) => {
+  try {
+    if (!req.userId)
+      return res.status(404).json({ message: "user is not authenticated" });
+    const { id } = req.body; //here we are getting the music id that we want to add to favourite inside body
+    const result = await User.findById(req.userId);
+    result.musicFavourite.push(id); //pushing music to favourite
+    const updatedResult = await User.findByIdAndUpdate(req.userId, result, {
+      new: true,
+    });
+    res.status(500).json(updatedResult);
+  } catch (error) {
+    res.status(500).json({ message: "something went wrong" });
+  }
+};
+
+//-------------------------fetch favourite songs------------------------
+export const fetchFavourites = async (req, res) => {
+  try {
+    if (!req.userId)
+      return res.status(404).json({ message: "user is not authenticated" });
+    const user = await User.findById(req.userId);
+    const result = await Music.find({ _id: { $in: user.musicFavourite } });
+    result.map((single) => {
+      const fileName = single.thumbnail;
+      single.thumbnail = path.join(
+        process.env.BASIC_ROUTE,
+        "images/music",
+        fileName
+      );
+      return single;
+    });
+    return res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ message: "something went wrong" });
+  }
+};
+
+//-----------------------remove from favouorite music------------------------
+export const removeFromFavourite = async (req, res) => {
+  try {
+    if (!req.userId)
+      return res.status(404).json({ message: "user is not authenticated" });
+    const { id } = req.body; //here we are getting the music id that we want to remove from favourite inside body
+    const user = await User.findById(req.userId);
+
+    const array = user.musicFavourite.filter((single) => single !== id);
+
+    const result = await User.findByIdAndUpdate(
+      req.userId,
+      { musicFavourite: array },
+      { new: true }
+    );
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "something went wrong" });
   }
 };

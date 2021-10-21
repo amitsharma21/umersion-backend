@@ -5,6 +5,7 @@ export const createFeeling = async (req, res) => {
   try {
     if (!req.userId)
       return res.status(404).json({ message: "user is not authenticated" });
+
     const { date, mood, tags, feeling } = req.body;
     const result = await Feeling.create({
       author: req.userId,

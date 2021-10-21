@@ -8,6 +8,7 @@ const userSchema = mongoose.Schema({
   profilePicture: { type: String, required: false },
   isActive: { type: Boolean, default: true },
   signUpMethod: { type: String, required: true },
+  musicFavourite: { type: [String], default: [] },
 });
 
 export default mongoose.model("User", userSchema);
