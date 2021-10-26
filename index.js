@@ -17,7 +17,8 @@ import blogRoutes from "./routes/blog.js";
 import musicRoutes from "./routes/music.js";
 import videoRoutes from "./routes/video.js";
 import motivationRoutes from "./routes/motivation.js";
-import sessionRoutes from "./routes/session.js";
+import guidedMeditationRoutes from "./routes/guidedMeditation.js";
+import categoryRoutes from "./routes/category.js";
 
 const app = express();
 app.use(express.static("public"));
@@ -54,7 +55,9 @@ app.use("/video", videoRoutes);
 //motivation route
 app.use("/motivation", motivationRoutes);
 //session route
-app.use("/session", sessionRoutes);
+app.use("/guidedmeditation", guidedMeditationRoutes);
+//category
+app.use("/category", categoryRoutes);
 app.get("/", (req, res) => {
   res.send("Welcome to the Umersion API version 1.0");
 });

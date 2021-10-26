@@ -13,7 +13,7 @@ export const createMusic = async (req, res) => {
   try {
     const file = req.files.musicFile;
     const thumbnail = req.files.thumbnail;
-    const { title, description, tags, plan } = req.body;
+    const { title, description, tags, plan, category } = req.body;
 
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
@@ -54,6 +54,7 @@ export const createMusic = async (req, res) => {
       music: fileName,
       thumbnail: thumbnailName,
       plan,
+      category,
     });
 
     res.status(200).json(result);

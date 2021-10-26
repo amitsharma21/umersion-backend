@@ -20,8 +20,9 @@ export const createNote = async (req, res) => {
 //fetching all the notes
 export const fetchAllNotes = async (req, res) => {
   try {
-    if (!req.userId)
+    if (!req.userId) {
       return res.status(404).json({ message: "user is not authenticated" });
+    }
     const result = await Note.find({ author: req.userId });
     res.status(200).json(result);
   } catch (error) {

@@ -9,6 +9,7 @@ const userSchema = mongoose.Schema({
   isActive: { type: Boolean, default: true },
   signUpMethod: { type: String, required: true },
   musicFavourite: { type: [String], default: [] },
+  guidedMeditationFavourite: { type: [String], default: [] },
 });
 
 export default mongoose.model("User", userSchema);

@@ -1,13 +1,14 @@
 import mongoose from "mongoose";
 
-const sessionSchema = mongoose.Schema({
+const guidedMeditationSchema = mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
   tags: { type: [String], required: true },
   thumbnail: { type: String, required: false },
   audioTracks: { type: [String], default: [] },
   videoTracks: { type: [String], default: [] },
+  category: { type: String, required: true },
   plan: { type: String, default: "free" },
 });
 
-export default mongoose.model("Session", sessionSchema);
+export default mongoose.model("GuidedMeditation", guidedMeditationSchema);
