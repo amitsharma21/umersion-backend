@@ -104,7 +104,7 @@ export const fetchAllMusic = async (req, res) => {
       const fileName = single.thumbnail;
       single.thumbnail = path.join(
         process.env.BASIC_ROUTE,
-        "images/blogs",
+        "images/music",
         fileName
       );
       return single;
@@ -126,6 +126,37 @@ export const fetchSingleMusic = async (req, res) => {
       "images/music",
       fileName
     );
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ message: "something went wrong" });
+  }
+};
+
+//------------------------------------delete the music----------------------------------
+export const deleteMusic = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const result = await Music.findByIdAndDelete(id);
+
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+
+    //deleting the musci file from folder
+    const music = result.music;
+    const pathToMusic = path.join(__dirname, "../public/music", music);
+
+    fs.unlinkSync(pathToMusic);
+
+    //deleting the thumbnail from the folder
+    const thumbnail = result.thumbnail;
+    const pathToThumbnail = path.join(
+      __dirname,
+      "../public/images/music",
+      thumbnail
+    );
+
+    fs.unlinkSync(pathToThumbnail);
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ message: "something went wrong" });

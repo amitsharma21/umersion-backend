@@ -11,6 +11,7 @@ dotenv.config();
 export const createMotivation = async (req, res) => {
   try {
     const file = req.files.motivationImage;
+    console.log(file);
     const { quote } = req.body;
 
     const __filename = fileURLToPath(import.meta.url);
@@ -43,6 +44,7 @@ export const createMotivation = async (req, res) => {
 
     res.status(200).json(result);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };

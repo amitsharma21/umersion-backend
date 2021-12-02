@@ -8,7 +8,6 @@ const guidedMeditationSchema = mongoose.Schema({
   audioTracks: { type: [String], default: [] },
   videoTracks: { type: [String], default: [] },
   category: { type: String, required: true },
-  plan: { type: String, default: "free" },
 });
 
 export default mongoose.model("GuidedMeditation", guidedMeditationSchema);

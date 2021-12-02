@@ -6,6 +6,7 @@ import {
   streamMusic,
   fetchSingleMusic,
   fetchAllMusic,
+  deleteMusic,
   addToFavourite,
   fetchFavourites,
   removeFromFavourite,
@@ -24,6 +25,7 @@ router.use(
 router.post("/create", createMusic);
 router.get("/fetchsingle/:id", fetchSingleMusic);
 router.get("/fetchall", fetchAllMusic);
+router.delete("/delete/:id", deleteMusic);
 router.get("/stream/:id", streamMusic);
 router.patch("/addtofavourite", userAuth, addToFavourite);
 router.get("/fetchfavourite", userAuth, fetchFavourites);

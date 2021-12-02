@@ -11,12 +11,11 @@ dotenv.config();
 export const createBlog = async (req, res) => {
   try {
     const file = req.files.blogImage;
-    const { title, description, tags, date, author } = req.body;
+    const { title, description, tags } = req.body;
 
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
-    const fileName =
-      new Date().getTime().toString() + author + path.extname(file.name);
+    const fileName = new Date().getTime().toString() + path.extname(file.name);
 
     //checking file size
     if (file.truncated) throw new Error("File size is too big");
@@ -36,9 +35,9 @@ export const createBlog = async (req, res) => {
     const result = await Blog.create({
       title,
       description,
-      tags: ["a"],
+      tags,
       date: new Date(),
-      author,
+      author: "Admin",
       image: fileName,
     });
 
@@ -86,12 +85,11 @@ export const updateBlog = async (req, res) => {
   try {
     const { id } = req.params;
     const file = req.files.blogImage;
-    const { title, description, tags, date, author, image } = req.body;
+    const { title, description, tags } = req.body;
 
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
-    const fileName =
-      new Date().getTime().toString() + author + path.extname(file.name);
+    const fileName = new Date().getTime().toString() + path.extname(file.name);
 
     //checking file size
     if (file.truncated) throw new Error("File size is too big");
@@ -110,9 +108,9 @@ export const updateBlog = async (req, res) => {
     const updatedBlog = await Blog.findByIdAndUpdate(id, {
       title,
       description,
-      tags: ["c", "d"],
+      tags,
       date: new Date(),
-      author,
+      author: "Admin",
       image: fileName,
     });
     const deletePath = path.join(

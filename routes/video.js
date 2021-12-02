@@ -1,7 +1,13 @@
 import express from "express";
 import fileUpload from "express-fileupload";
 
-import { createVideo, streamVideo } from "../controllers/video.js";
+import {
+  createVideo,
+  fetchSingleVideo,
+  streamVideo,
+  fetchAllVideos,
+  deleteVideo,
+} from "../controllers/video.js";
 
 const router = express.Router();
 
@@ -14,5 +20,8 @@ router.use(
 
 router.post("/create", createVideo);
 router.get("/stream/:id", streamVideo); //for streaming
+router.get("/fetchsingle/:id", fetchSingleVideo);
+router.get("/fetchall", fetchAllVideos);
+router.delete("/delete/:id", deleteVideo);
 
 export default router;

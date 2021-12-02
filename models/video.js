@@ -6,6 +6,8 @@ const videoSchema = mongoose.Schema({
   tags: { type: [String], required: true },
   video: { type: String, required: true },
   plan: { type: String, requires: true, default: "free" },
+  thumbnail: { type: String, required: false },
+  category: { type: String, required: true },
 });
 
 export default mongoose.model("Video", videoSchema);

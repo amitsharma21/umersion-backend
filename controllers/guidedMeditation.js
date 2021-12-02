@@ -11,15 +11,7 @@ dotenv.config();
 //----------------------create Guided Meditation---------------------------------------
 export const createGuidedMeditation = async (req, res) => {
   try {
-    const {
-      title,
-      description,
-      tags,
-      audioTracks,
-      videoTracks,
-      plan,
-      category,
-    } = req.body;
+    const { title, description, category, tags } = req.body;
     const thumbnail = req.files.thumbnail;
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
@@ -49,15 +41,13 @@ export const createGuidedMeditation = async (req, res) => {
     const result = await GuidedMeditation.create({
       title,
       description,
-      tags,
+      tags: ["a"],
       thumbnail: thumbnailName,
-      audioTracks,
-      videoTracks,
       category,
-      plan,
     });
     res.status(200).json(result);
   } catch (error) {
+    // console.log(error);
     res.status(500).json({ message: "something went wrong" });
   }
 };

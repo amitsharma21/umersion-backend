@@ -29,7 +29,7 @@ export const signin = async (req, res) => {
     );
     res.status(200).json({ result: existingAdmin, token });
   } catch (error) {
-    res.status(500).json({ message: "something went wrong!" });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -42,7 +42,7 @@ export const signup = async (req, res) => {
 
     //if user is present we are not moving forward and send the error to the frontend
     if (existingAdmin)
-      res.status(400).json({ message: "Admin already exists" });
+      return res.status(400).json({ message: "Admin already exists" });
 
     // hashing the password
     const hashedPassword = await bcrypt.hash(password, 12 /*salt number*/);
